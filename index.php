@@ -1,9 +1,56 @@
+<?php
+
+// basically just sets the variables from the database
+$host = 'localhost';
+$username = 'root';
+$password = '';
+$database = 'rentalOrg';
+
+$conn = mysqli_connect($host, $username, $password, $database);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // gets information from form
+    $new_username = $_POST['username'];
+    $new_password = $_POST['passkey'];
+    $new_name = $_POST['name'];
+    $new_dob = $_POST['dob'];
+    $new_phone = $_POST['phone'];
+    $new_email = $_POST['email'];
+    $new_address = $_POST['address'];
+    
+    // makes information request to database
+    $result = mysqli_query($conn, "SELECT MAX(CustomerID) as max_id FROM customer");
+    $row = mysqli_fetch_assoc($result);
+    $next_id = $row['max_id'] + 1;
+    
+    // just a base case
+    if (!$next_id) {
+        $next_id = 1001;
+    }
+    
+    // sets up the filler queries
+    $sql = "INSERT INTO customer (CustomerID, CustomerName, DOB, PhoneNumber, Email, `Address`)
+            VALUES ('$next_id', '$new_name', '$new_dob', '$new_phone', '$new_email', '$new_address' )";
+    $sql2 = "INSERT INTO account (UserName, PassKey, CustomerID) 
+            VALUES ('$new_username', '$new_password', '$next_id')";
+    
+    // checks if it works try and break something and it will tell you whats wrong
+    if (mysqli_query($conn, $sql)) {
+        if(mysqli_query($conn, $sql2)) {
+        header("Location: login.php");
+        }
+    } else {
+        echo "Error: " . mysqli_error($conn);
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel = "stylesheet" href = "style/home.css">
+  <link rel = "stylesheet" href = "style/home.css"<?php echo time(); ?>>
   <title>Car Rental Company</title>
 </head>
 <body>
@@ -13,65 +60,34 @@
             <li class = "left"><a>For Sale</a></li>
             <li class = "left"><a>Maintanence</a></li>
             <li class = "left"><a>Help</a></li>
-            <li class = "right"><a>Register</a></li>
+            <li class = "right"><a href = "login.php">Login</a></li>
         </ul>
     </nav>
 </div>
 
-<?php
-
-$host = 'localhost';
-$username = 'root';
-$password = '';
-$database = 'rentalOrg';
-
-$conn = mysqli_connect($host, $username, $password, $database);
 
 
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+<div class="register">
+<!--  This is a form  -->
+<h1>Register</h1>
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-$user = $_POST['username'];
-$pass = $_POST['passkey'];
-
-
-$sql = "SELECT CustomerID FROM account WHERE UserName = '$user' AND PassKey = '$pass'";
-$result = mysqli_query($conn, $sql);
+<!-- The method makes sure a users content is recorded as a post, 
+ and the action tells us where to look for php functionality,
+ in our case blank means the same document so no redirecting first-->
+<form method="POST" action = "">
 
 
-if (mysqli_num_rows($result) > 0) {
-
-    $row = mysqli_fetch_assoc($result);
-    echo "Login successful! CustomerID: " . $row['CustomerID'];
-    header("Location: process_login.php");
-
-} else {
-
-    header("Location: index.php?error=Invalid user or pass");
-    exit();
-}
-}
-
-
-mysqli_close($conn);
-?>
-
-<div class="login">
-
-<h1>Login</h1>
-
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<h2>Username</h2> 
-
-<input type =  "text" id ="username" name = "username" placeholder = "Enter Username...">
-
-
-<h2>Password</h2> 
-<input type =  "text" id ="password" name = "passkey" placeholder = "Enter Password...">
-<input type = "submit" value = "Submit">
-
+<!-- The names allow me to grab the information from the input sections
+ and the placeholders hint at the kind of information thats going to be placed
+ in each input -->
+<input type =  "text" name ="username" placeholder = "Enter Username...">
+<input type =  "password" name ="passkey" placeholder = "Enter Password...">
+<input type =  "text" name ="name" placeholder = "Enter Name...">
+<input type =  "text" name ="email" placeholder = "Enter Email...">
+<input type =  "text" name ="address" placeholder = "Enter Address...">
+<input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder = "###-###-####">
+<input type="date" name="dob" min="1900-01-01" max="2025-12-01"/>
+<input type = "submit" value = "Register">
 </form>
 
 </div>

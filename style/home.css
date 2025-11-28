@@ -11,7 +11,7 @@ html {
 
 body {
     color: white;
-    font-size: 20;
+    font-size: 20px;
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-weight: 600;
@@ -19,7 +19,7 @@ body {
 }
 
 .titlebar {
-
+    font-size: 150%;
     margin-bottom: 10vh;
 
 }
@@ -28,34 +28,41 @@ body {
     position: fixed;
     left: 0;
     top:0;
-    width: 100vw;  
+    width: 100%;  
     margin: 0;
     padding: 0;
     list-style-type: none;
     overflow: hidden;
     background-color: rgb(61, 113, 255);
+        height: 60px;
+    z-index: 1000;
 }
 
 ul{
 
-    margin:0;
+    margin: 0;
     padding: 0;
 
 }
 
 li {
-    list-style-type: none;
+      list-style-type: none;
+    display: inline-block; 
 }
 
 .titlebar nav ul li a{
 display: block;
 text-align: center;
-padding: 1vw 1vw;
-font-size: 150%;
-
+padding: 1vw 1vh;
+text-decoration: none;
 text-align: center;
 
 transition: background-color 0.3s ease-in-out;
+}
+
+a:visited {
+  color: inherit;
+  text-decoration: none; 
 }
 
 .titlebar nav ul li:hover {
@@ -77,9 +84,9 @@ background-color: rgb(80, 115, 211);
 }
 
 .login {
-  display: grid;
+  display: block;
   text-align:center;
-  padding: 0vw 20vh;
+  padding: 0vh 0vw;
   justify-content: center;
 
 }
@@ -87,10 +94,12 @@ background-color: rgb(80, 115, 211);
 .login h2
 {
     color: black;
+    padding: inherit 1vh;
 }
 
 .login h1
 {
+    margin: 0 auto;
     color: black;
 }
 
@@ -104,10 +113,55 @@ background-color: rgb(80, 115, 211);
 
 }
 
-
 .login input[type="submit"]{
+    display: block;
+    background-color: rgb(61, 113, 255);
+    color:white;
+       margin: 0 auto;
+}
+.login input[type="submit"]:hover{
+    background-color: rgb(51, 93, 207);
+    color:white;
+}
 
 
-    background: blue;
+.register {
+  display: block;
+  text-align:center;
+  padding: 0vw 20vh;
+  justify-content: center;
 
 }
+
+.register h2
+{
+    color: black;
+    padding: inherit 1vh;
+}
+
+.register h1
+{
+    color: black;
+}
+
+.register input {
+    display: block;
+    font-size: 130%;
+    padding: 0.25vh 0vw;
+    margin: 0.25vh auto;
+    height: 35px;
+    width: 350px;
+
+}
+
+.register input[type="submit"]{
+    display: block;
+    background-color: rgb(61, 113, 255);
+    color:white;
+       margin: 0 auto;
+}
+.register input[type="submit"]:hover{
+    background-color: rgb(51, 93, 207);
+    color:white;
+}
+
