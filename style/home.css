@@ -165,3 +165,23 @@ background-color: rgb(80, 115, 211);
     color:white;
 }
 
+.register textarea {
+   font-family:"Times New Roman", Times, serif;  
+   font-size: 25px;   
+  }
+
+.payment {
+    display: block;
+    font-size: 130%;
+    padding: 0.25vh 0vw;
+    margin: 0.25vh auto;
+    height: 35px;
+    width: 350px;
+}
+
+.payment h1 {
+    color:rgb(61, 113, 255);
+    display: left;
+
+
+}

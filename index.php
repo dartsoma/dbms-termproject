@@ -57,9 +57,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class = "titlebar">
     <nav>
         <ul>
-            <li class = "left"><a>For Sale</a></li>
+            <li class = "left"><a href = "cars.php">For Sale</a></li>
             <li class = "left"><a>Maintanence</a></li>
-            <li class = "left"><a>Help</a></li>
+            <li class = "left"><a href = "help.php">Help</a></li>
+            
+            <li class="right"><a href="stafflogin.php">Staff Login</a></li>
             <li class = "right"><a href = "login.php">Login</a></li>
         </ul>
     </nav>
@@ -74,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- The method makes sure a users content is recorded as a post, 
  and the action tells us where to look for php functionality,
  in our case blank means the same document so no redirecting first-->
-<form method="POST" action = "">
+<form method="POST" action = "" autocomplete="off">
 
 
 <!-- The names allow me to grab the information from the input sections
@@ -86,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <input type =  "text" name ="email" placeholder = "Enter Email...">
 <input type =  "text" name ="address" placeholder = "Enter Address...">
 <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder = "###-###-####">
-<input type="date" name="dob" min="1900-01-01" max="2025-12-01"/>
+<input type="date" name="dob" min="1900-01-01" max="2025-12-01" >
 <input type = "submit" value = "Register">
 </form>
 

@@ -23,7 +23,9 @@ if ($_COOKIE['is_logged_in'] == 'yes') {
         <ul>
             <li class = "left"><a>For Sale</a></li>
             <li class = "left"><a>Maintanence</a></li>
-            <li class = "left"><a>Help</a></li>
+            <li class = "left"><a href = "help.php">Help</a></li>
+            
+            <li class="right"><a href="stafflogin.php">Staff Login</a></li>
             <li class = "right"><a href="index.php">Register</a></li>
         </ul>
     </nav>
@@ -52,14 +54,18 @@ $pass = $_POST['passkey'];
 // that exists with the credientals we gave it
 
 $sql = "SELECT CustomerID FROM account WHERE UserName = '$user' AND PassKey = '$pass'";
+$sql2 = "SELECT CustomerID FROM customer";
 $result = mysqli_query($conn, $sql);
+$result2 = mysqli_query($conn, $sql2);
 
 // we will populate cookies so that we stay logged on to the website for a period of time
 // i set it to something like a little over 24hrs; this would be measured by the second.
 if (mysqli_num_rows($result) > 0) {
     setcookie('is_logged_in', 'yes', time() + (86400 * 7), "/");
-    setcookie('username', $user, time() + (86400 * 7), "/"); 
+    setcookie('username', $user, time() + (86400 * 7), "/");
     $row = mysqli_fetch_assoc($result);
+    $row2 = mysqli_fetch_assoc($result2);
+    setcookie('email', $row2['Email'], time() + (86400 * 7), "/");
     setcookie('customer_id', $row['CustomerID'], time() + (86400 * 7), "/");
     header("Location: dashboard.php");
 
@@ -78,14 +84,14 @@ mysqli_close($conn);
 
 <h1>Login</h1>
 
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" autocomplete="off">
 <h2>Username</h2> 
 
 <input type =  "text" id ="username" name = "username" placeholder = "Enter Username...">
 
 
 <h2>Password</h2> 
-<input type =  "text" id ="password" name = "passkey" placeholder = "Enter Password...">
+<input type =  "password" id ="password" name = "passkey" placeholder = "Enter Password...">
 <input type = "submit" value = "Submit">
 
 </form>
