@@ -2,11 +2,9 @@
 
 <?php
 
-//if ($_COOKIE['paying'] !== 'yes') {
+//if ($_COOKIE[''] !== 'yes') {
 //    header("Location: index.php");
 //}
-
-
 
 ?>
 
@@ -23,10 +21,10 @@
     <nav>
         <ul>
             <li class = "left"><a href = "cars.php">For Sale</a></li>
-            <li class = "left"><a>Maintenance</a></li>
+            <li class = "left"><a href = "maintenance.php">Maintenance</a></li>
             <li class = "left"><a href = "help.php">Help</a></li>
-
-            <li class="right"><a href="stafflogin.php">Staff Login</a></li>
+            
+            <li class="right"><a href = "stafflogin.php">Staff Login</a></li>
             <li class = "right"><a href = "login.php">Login</a></li>
         </ul>
     </nav>
@@ -42,15 +40,20 @@
 
 <h1>Payment</h1>
 
-<input type = "text" name ="username" placeholder = "Enter Username...">
-<input type = "password" name ="passkey" placeholder = "Enter Password...">
-<input type = "text" name ="name" placeholder = "Enter Name...">
-<input type = "text" name ="email" placeholder = "Enter Email...">
-<input type = "text" name ="address" placeholder = "Enter Address...">
-<input type= "tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder = "###-###-####">
-<input type= "date" name="dob" min="1900-01-01" max="2025-12-01" >
-<input type = "submit" value = "Register">
+<h2>Service: <?php echo $_COOKIE['service']; ?></h2>
 
+<h2>Cost: <?php echo $_COOKIE['paymentCost']; ?></h2>
+
+
+
+
+<input type="radio" name="paymentOptions" value="paypal" required>
+  <label for="html">Paypal</label><br>
+  <input type="radio" name="paymentOptions" value="credit">
+  <label for="css">Credit Card</label><br>
+  <input type="radio" name="paymentOptions" value="debit">
+  <label for="javascript">Debit Card</label>
+<input type = "submit" value = "Confirm Payment">
 </form>
 
 </div>

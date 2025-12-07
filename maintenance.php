@@ -1,8 +1,10 @@
 <?php 
-if (isset($_COOKIE['is_staff']) && $_COOKIE['is_staff'] == 'yes') {
-    header("Location: maintenance.php");
+if (!isset($_COOKIE['is_logged_in']) || $_COOKIE['is_logged_in'] !== 'yes') {
+    header("Location: login.php");
     exit();
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -19,12 +21,11 @@ if (isset($_COOKIE['is_staff']) && $_COOKIE['is_staff'] == 'yes') {
 <div class="titlebar">
     <nav>
         <ul>
-            <li class="left"><a href="#">For Sale</a></li>
-            <li class="left"><a href="#">Maintenance</a></li>
+            <li class="left"><a href="cars.php">For Sale</a></li>
+            <li class="left"><a href="maintenance.php">Maintenance</a></li>
             <li class="left"><a href="help.php">Help</a></li>
 
-            <li class="right"><a href="stafflogin.php">Staff Login</a></li>
-            <li class="right"><a href="login.php">Login</a></li>
+            <li class="right"><a><?php echo $_COOKIE['username']; ?></a></li>
         </ul>
     </nav>
 </div>
@@ -34,40 +35,66 @@ if (isset($_COOKIE['is_staff']) && $_COOKIE['is_staff'] == 'yes') {
 $host = 'localhost';
 $username = 'root';
 $password = '';
-$database = 'rentalOrg';
+$database = 'rentalorg';
 
 $conn = mysqli_connect($host, $username, $password, $database);
 
+
+$visibilityClass = 'cost-box-hidden';
+
 if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
+    die("<h1>Error connecting to database</h1>");
 }
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $branchID = $_POST['Repair'];
-    $staffID = $_POST['Service'];
+$cost = 0;
 
-    $sql = "SELECT EmployeeID, Name 
-            FROM staff 
-            WHERE EmployeeID = '$staffID' AND BranchID = '$branchID'";
+    $service = $_POST['service'] ?? '';
+    $cost = match ($service) {
+        'Repair' => 150,
+        'Paint' => 50,
+        'Wash'  => 25,
+        default => 10,
+    };
 
-    $result = mysqli_query($conn, $sql);
-
-    if (mysqli_num_rows($result) > 0) {
-
-        $row = mysqli_fetch_assoc($result);
-
-        setcookie('is_staff', 'yes', time() + (86400 * 7), "/");
-        setcookie('staff_name', $row['Name'], time() + (86400 * 7), "/");
-        setcookie('staff_id', $row['EmployeeID'], time() + (86400 * 7), "/");
-        setcookie('branch_id', $branchID, time() + (86400 * 7), "/");
-
-        header("Location: maintenance.php");
-        exit();
-
+    if (isset($_POST['requestQoute'])) {
+        setcookie("paymentCost", $cost, time() + 600, "/");
+        $visibilityClass = "cost-box-visible";
     } else {
-        header("Location: maintenance.php?error=Invalid Branch ID or Staff ID");
+    
+    $carID = $_POST['carID'];
+
+    $today = date("Y-m-d");
+
+
+    $result = mysqli_query($conn, "SELECT * FROM car WHERE CarID = $carID");
+
+
+    if (mysqli_fetch_assoc($result) > 0){
+    $result2 = mysqli_query($conn, "SELECT MAX(MaintenanceID) AS max_id FROM maintenanceRecord");
+    $row = mysqli_fetch_assoc($result2);
+    $nextID = $row['max_id'] + 1;
+
+    if (!$nextID) {
+        $nextID = 1;
+    }
+
+
+    $sql = "INSERT INTO maintenanceRecord (MaintenanceID, CarID, Date, Description, Cost)
+            VALUES ('$nextID', '$carID', '$today', '$service', '$cost')";
+
+    if (mysqli_query($conn, $sql)) {
+
+        setcookie("service", $service, time() + 600, "/");
+        setcookie("paymentCost", $cost, time() + 600, "/");
+        setcookie("maintenance_id", $nextID, time() + 600, "/");
+
+        header("Location: payment.php");
         exit();
+    }
+    }
     }
 }
 
@@ -78,21 +105,28 @@ mysqli_close($conn);
 
 <h1>Repair</h1>
 
-<?php if (isset($_GET['error'])): ?>
-    <p style="color:red;"><?php echo $_GET['error']; ?></p>
-<?php endif; ?>
-
 <form method="POST" action="">
-    <h2>Branch ID</h2>
-    <input type="text" name="branchID" placeholder="Enter cars make/model/year/trim..." required>
 
-    <h2>Employee ID</h2>
-    <input type="password" name="staffID" placeholder="Services..." required>
+    <h2>Car</h2>
+    <input type="text" name="carID" placeholder="Car Id..." required>
 
-    <input type="submit" value="Login">
+    <h2>Service</h2>
+    <input type="text" id="serviceBox" name="service" placeholder="Enter Service Type..." required>
+
+    <div class="<?php echo $visibilityClass;?>">
+        Cost: <?php  echo $cost ?? ($_COOKIE['paymentCost'] ?? 0); ?>
+    </div>
+
+    <br><br>
+
+
+
+    <input type="submit" value="Pay" style="width:150px;">
+      <input type="submit" name= "requestQoute" value="Request Qoute" formnovalidate>
+
 </form>
-
 </div>
+
 
 </body>
 </html>

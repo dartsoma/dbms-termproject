@@ -21,9 +21,9 @@ if ($_COOKIE['is_logged_in'] == 'yes') {
 <div class = "titlebar">
     <nav>
         <ul>
-            <li class = "left"><a>For Sale</a></li>
-            <li class = "left"><a>Maintanence</a></li>
-            <li class = "left"><a href = "help.php">Help</a></li>
+            <li class="left"><a href="cars.php">For Sale</a></li>
+            <li class="left"><a href="maintenance.php">Maintenance</a></li>
+            <li class="left"><a href="help.php">Help</a></li>
             
             <li class="right"><a href="stafflogin.php">Staff Login</a></li>
             <li class = "right"><a href="index.php">Register</a></li>

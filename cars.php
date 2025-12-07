@@ -1,5 +1,5 @@
 <?php 
-// Allow customers or staff to access the page
+
 if (
     (!isset($_COOKIE['is_logged_in']) || $_COOKIE['is_logged_in'] !== 'yes') &&
     (!isset($_COOKIE['is_staff']) || $_COOKIE['is_staff'] !== 'yes')
@@ -23,9 +23,10 @@ if (
 <div class="titlebar">
     <nav>
         <ul>
-            <li class="left"><a href="cars.php">For Sale</a></li>
-            <li class="left"><a href="#">Maintenance</a></li>
-            <li class="left"><a href="help.php">Help</a></li>
+            <li class = "left"><a href = "cars.php">For Sale</a></li>
+            <li class = "left"><a href = "maintenance.php">Maintenance</a></li>
+            <li class = "left"><a href = "help.php">Help</a></li>
+            
 
             <?php 
             if (isset($_COOKIE['is_staff']) && $_COOKIE['is_staff'] === 'yes') {
@@ -51,14 +52,14 @@ if (!$conn) {
     die("<h1>Error connecting to database</h1>");
 }
 
-// Query matches EXACT car table structure
+
 $sql = "SELECT CarID, Brand, Model, Category, ManufacturerYear, LicensePlateNumber, RentalStatus, BranchID FROM car";
 $result = mysqli_query($conn, $sql);
 ?>
 
 <h1 class="center-title">Cars</h1>
 
-<!-- Must style car-grid and car-card inside home.css -->
+
 <div class="car-grid">
 
 <?php

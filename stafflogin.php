@@ -19,9 +19,10 @@ if (isset($_COOKIE['is_staff']) && $_COOKIE['is_staff'] == 'yes') {
 <div class="titlebar">
     <nav>
         <ul>
-            <li class="left"><a href="#">For Sale</a></li>
-            <li class="left"><a href="#">Maintenance</a></li>
-            <li class="left"><a href="help.php">Help</a></li>
+            <li class = "left"><a href = "cars.php">For Sale</a></li>
+            <li class = "left"><a href = "maintenance.php">Maintenance</a></li>
+            <li class = "left"><a href = "help.php">Help</a></li>
+            
 
             <li class="right"><a href="stafflogin.php">Staff Login</a></li>
             <li class="right"><a href="login.php">Login</a></li>

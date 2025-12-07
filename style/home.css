@@ -171,6 +171,7 @@ background-color: rgb(80, 115, 211);
   }
 
 .payment {
+    color:rgb(61, 113, 255);
     display: block;
     font-size: 130%;
     padding: 0.25vh 0vw;
@@ -180,8 +181,60 @@ background-color: rgb(80, 115, 211);
 }
 
 .payment h1 {
-    color:rgb(61, 113, 255);
     display: left;
 
 
+}   
+
+.car-grid{
+
+    color:rgb(61, 113, 255);
+}
+
+.button-row{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.btn{
+    width: 150px;
+    padding: 8px 0;
+    text-align: center;
+}   
+.login {
+    width: 50%;
+    margin: 0 auto;
+    text-align: center
+}
+
+.cost-box-visible {
+    color: black !important;
+    visibility: visible;
+}
+
+.cost-box-hidden  {
+    color: red;
+    visibility: hidden;
+}
+
+
+.payment input[type="submit"]{
+    display: block;
+    background-color: rgb(61, 113, 255);
+    color:white;
+       margin: 0 auto;
+}
+
+.payment h2{
+    display: block;
+    background-color:black;
+    color:white;
+       margin: 0 auto;
+}
+
+.payment input[type="submit"]:hover{
+    background-color: rgb(51, 93, 207);
+    color:white;
 }
