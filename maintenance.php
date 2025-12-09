@@ -25,7 +25,7 @@ if (!isset($_COOKIE['is_logged_in']) || $_COOKIE['is_logged_in'] !== 'yes') {
             <li class="left"><a href="maintenance.php">Maintenance</a></li>
             <li class="left"><a href="help.php">Help</a></li>
 
-            <li class="right"><a><?php echo $_COOKIE['username']; ?></a></li>
+            <li class = "right"><a href = "dashboard.php"><?php echo $_COOKIE['username']; ?></a></li>
         </ul>
     </nav>
 </div>
@@ -85,20 +85,18 @@ $cost = 0;
     $sql = "INSERT INTO maintenanceRecord (MaintenanceID, CarID, Date, Description, Cost)
             VALUES ('$nextID', '$carID', '$today', '$service', '$cost')";
 
-    if (mysqli_query($conn, $sql)) {
 
+        setcookie("queryCon",  $service, time() + 600, "/");
         setcookie("service", $service, time() + 600, "/");
         setcookie("paymentCost", $cost, time() + 600, "/");
-        setcookie("maintenance_id", $nextID, time() + 600, "/");
+        setcookie("paymentType", "maintenance", time() + 600, "/");
+        setcookie("car_id", $nextID, time() + 600, "/");
 
         header("Location: payment.php");
         exit();
     }
     }
-    }
 }
-
-mysqli_close($conn);
 ?>
 
 <div class="login">

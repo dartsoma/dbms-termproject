@@ -67,6 +67,7 @@ if (mysqli_num_rows($result) > 0) {
     $row2 = mysqli_fetch_assoc($result2);
     setcookie('email', $row2['Email'], time() + (86400 * 7), "/");
     setcookie('customer_id', $row['CustomerID'], time() + (86400 * 7), "/");
+    setcookie('dashboardMessage', "Successful Login", time() + 5, "/");
     header("Location: dashboard.php");
 
 } else {
@@ -84,7 +85,7 @@ mysqli_close($conn);
 
 <h1>Login</h1>
 
-<form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>" autocomplete="off">
+<form method="POST" action="" autocomplete="off">
 <h2>Username</h2> 
 
 <input type =  "text" id ="username" name = "username" placeholder = "Enter Username...">

@@ -21,18 +21,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // makes information request to database
     $result = mysqli_query($conn, "SELECT MAX(CustomerID) as max_id FROM customer");
     $row = mysqli_fetch_assoc($result);
-    $next_id = $row['max_id'] + 1;
+    $nextID = $row['max_id'] + 1;
+    
+
     
     // just a base case
-    if (!$next_id) {
-        $next_id = 1001;
+    if (!$nextID) {
+        $nextID = 1001;
     }
-    
+
     // sets up the filler queries
     $sql = "INSERT INTO customer (CustomerID, CustomerName, DOB, PhoneNumber, Email, `Address`)
-            VALUES ('$next_id', '$new_name', '$new_dob', '$new_phone', '$new_email', '$new_address' )";
+            VALUES ('$nextID', '$new_name', '$new_dob', '$new_phone', '$new_email', '$new_address' )";
     $sql2 = "INSERT INTO account (UserName, PassKey, CustomerID) 
-            VALUES ('$new_username', '$new_password', '$next_id')";
+            VALUES ('$new_username', '$new_password', '$nextID')";
     
     // checks if it works try and break something and it will tell you whats wrong
     if (mysqli_query($conn, $sql)) {

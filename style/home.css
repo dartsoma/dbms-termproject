@@ -182,14 +182,41 @@ background-color: rgb(80, 115, 211);
 
 .payment h1 {
     display: left;
-
-
 }   
-
-.car-grid{
-
-    color:rgb(61, 113, 255);
+.car {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center; 
+    padding: 20px;
+    
+    color: rgb(61, 113, 255);
 }
+
+.car h1{
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+
+}
+
+
+.car-card {
+    background-color:  rgb(59, 95, 196);
+    display: flex;
+    padding: 20px;
+    flex-direction: column; 
+    margin: 10px;
+    color: rgb(255, 255, 255);
+
+}
+
+.car-card input {
+   
+    font-size: 100%;
+
+}
+
 
 .button-row{
     display: flex;
@@ -219,19 +246,36 @@ background-color: rgb(80, 115, 211);
     visibility: hidden;
 }
 
+.payment form{
+    padding-top: 1px;
+    margin-top: 0px;
+    background-color:  rgb(59, 95, 196);
+    color:white;
+}
+
+.payment h1{
+    background-color: inherit;
+text-align: center;
+margin-bottom: 10px;
+    color: rgb(14, 26, 59);
+}
 
 .payment input[type="submit"]{
     display: block;
     background-color: rgb(61, 113, 255);
     color:white;
-       margin: 0 auto;
+    font-size: 100%;
+    padding: 0.25vh 0vw;
+    margin: 0.25vh auto;
+    height: 35px;
+    width: 350px;
 }
 
 .payment h2{
     display: block;
-    background-color:black;
-    color:white;
-       margin: 0 auto;
+    margin: 3px auto;
+    text-align:center;
+    color: rgb(23, 39, 82);
 }
 
 .payment input[type="submit"]:hover{
